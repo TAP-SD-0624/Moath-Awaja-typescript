@@ -1,8 +1,9 @@
 import sharp from 'sharp';
 import * as imageService from '../src/services/imageService';
+import { getImageBuffer } from '../src/utils/Buffer';
 
 describe('Image Service', () => {
-    const buffer = Buffer.from('test');
+    const buffer = getImageBuffer('./test.jpg');
 
     it('should upload an image', async () => {
         const result = await imageService.uploadImage(buffer);

@@ -9,6 +9,7 @@ import {
     applyFilterController,
     applyWatermarkController
 } from '../src/Controllers/imageController';
+import { getImageBuffer } from '../src/utils/Buffer';
 
 const app = express();
 app.use(express.json());
@@ -22,7 +23,7 @@ app.post('/filter', upload.single('image'), applyFilterController);
 app.post('/watermark', upload.single('image'), applyWatermarkController);
 
 describe('Image Controller', () => {
-    const buffer = Buffer.from('test');
+    const buffer = getImageBuffer('./test.jpg');
     const file = {
         buffer,
         originalname: 'test.jpg',
@@ -46,7 +47,8 @@ describe('Image Controller', () => {
     it('should resize an image', async () => {
         const res = await request(app)
             .post('/resize')
-            .send({ width: 100, height: 100 })
+            .field('width', 100)
+            .field('height', 100)
             .attach('image', buffer, 'test.jpg');
         expect(res.status).toBe(200);
     });
@@ -54,7 +56,10 @@ describe('Image Controller', () => {
     it('should crop an image', async () => {
         const res = await request(app)
             .post('/crop')
-            .send({ width: 100, height: 100, x: 10, y: 10 })
+            .field('width', 100)
+            .field('height', 100)
+            .field('x', 10)
+            .field('y', 10)
             .attach('image', buffer, 'test.jpg');
         expect(res.status).toBe(200);
     });
@@ -62,7 +67,7 @@ describe('Image Controller', () => {
     it('should apply filter to an image', async () => {
         const res = await request(app)
             .post('/filter')
-            .send({ filterType: 'grayscale' })
+            .field('filterType', 'grayscale')
             .attach('image', buffer, 'test.jpg');
         expect(res.status).toBe(200);
     });
@@ -70,7 +75,7 @@ describe('Image Controller', () => {
     it('should apply watermark to an image', async () => {
         const res = await request(app)
             .post('/watermark')
-            .send({ text: 'Test Watermark' })
+            .field('text', 'Test Watermark')
             .attach('image', buffer, 'test.jpg');
         expect(res.status).toBe(200);
     });
