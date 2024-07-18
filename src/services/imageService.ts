@@ -3,11 +3,18 @@ import path from 'path';
 import { Buffer } from 'buffer';
 import { outPutFolder } from '../utils/outPut';
 
-// function to upload image
-export const uploadImage = async (fileBuffer: Buffer) => {
-    const outPutPath = path.join(outPutFolder, `uploaded_${Date.now()}.jpg`);
+const saveImage = async (fileBuffer: Buffer, prefix: string) => {
+    const outPutPath = path.join(outPutFolder, `${prefix}_${Date.now()}.jpg`);
     await sharp(fileBuffer).toFile(outPutPath);
     return outPutPath;
+}
+
+export const uploadImage = async (fileBuffer: Buffer) => {
+    return saveImage(fileBuffer, 'uploaded');
+}
+
+export const downloadImage = async (fileBuffer: Buffer) => {
+    return saveImage(fileBuffer, 'downloaded');
 }
 
 
@@ -29,12 +36,7 @@ export const cropImage = async (fileBuffer: Buffer, width: number, height: numbe
     return outPutPath;
 }
 
-// Function to download image
-export const downloadImage = async (fileBuffer: Buffer) => {
-    const outPutPath = path.join(outPutFolder, `downloaded_${Date.now()}.jpg`);
-    await sharp(fileBuffer).toFile(outPutPath);
-    return outPutPath;
-}
+
 
 // function to apply filter to image
 
@@ -83,8 +85,14 @@ export const addWatermark = async (fileBuffer: Buffer, text: string) => {
     return outputPath;
 
 };
+
 // Function to get image metadata
 export const getImageMetadata = async (fileBuffer: Buffer) => {
     const metadata = await sharp(fileBuffer).metadata();
     return metadata;
+}
+
+// Function to show image
+export const getImagePath = (imageName: string) => {
+    return path.join(outPutFolder, imageName);
 }

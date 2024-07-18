@@ -79,4 +79,11 @@ describe('Image Controller', () => {
             .attach('image', buffer, 'test.jpg');
         expect(res.status).toBe(200);
     });
+
+    it('should show an image', async () => {
+        const res = await request(app)
+            .get('/show/uploaded_test.jpg'); // Use an appropriate test image name
+        expect(res.status).toBe(200);
+        expect(res.headers['content-type']).toBe('image/jpeg');
+    });
 });
