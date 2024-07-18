@@ -1,4 +1,3 @@
-import sharp from 'sharp';
 import * as imageService from '../src/services/imageService';
 import { getImageBuffer } from '../src/utils/Buffer';
 
