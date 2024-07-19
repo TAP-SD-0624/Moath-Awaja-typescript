@@ -130,7 +130,6 @@ export const applyWatermarkController = async (req: Request, res: Response) => {
     }
 }
 
-
 // Controller to show image
 export const showImageController = async (req: Request, res: Response) => {
     try {

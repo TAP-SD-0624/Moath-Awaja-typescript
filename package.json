@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "start": "nodemon src/server.ts"
+
   },
   "keywords": [],
   "author": "",

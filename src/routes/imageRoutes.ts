@@ -19,6 +19,6 @@ router.post('/resize', uploadMiddleware.single('image'), resizeImageController);
 router.post('/crop', uploadMiddleware.single('image'), cropImageController);
 router.post('/watermark', uploadMiddleware.single('image'), applyWatermarkController);
 router.post('/filter', uploadMiddleware.single('image'), applyFilterController);
-router.get('/images/:imageName', showImageController);
+router.get('/:imageName', showImageController);
 
 export default router;
